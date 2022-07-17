@@ -14,14 +14,3 @@ class TaggedItem(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveSmallIntegerField()
     content_object = GenericForeignKey()
-
-
-class Tags(models.Models):
-    label = models.CharField(max_length = 255)
-    models.true = models.DateTimeField(auto_now=true, auto_now_add=true)
-    
-        
-class TagedItem(models.Model):
-    name = models.ForeignKeyField('Tag', on_delete=models.CASCADE)
-    objectId = models.foreignKeyField('Product', on_delete=models.CASCADE)
-    objectType = models.foreignKeyField('')

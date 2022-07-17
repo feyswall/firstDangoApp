@@ -5,4 +5,4 @@ from django.http import HttpResponse
 
 
 def say_hellow(request):
-    return render(request, "index.html", {'name': 'feyswal'})
+    return render(request, "index.html", {'name': 'mjeba'})

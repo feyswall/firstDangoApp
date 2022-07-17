@@ -12,7 +12,7 @@ class User(models.Model):
 
     user_name = models.CharField(max_length=255)
     password = models.CharField(max_length = 255)
-    gender = models.CharField(max_length =255, choices=GENDER, default=''))
+    gender = models.CharField(max_length =255, choices=GENDER )
     date_of_birth = models.DateTimeField(auto_now_add=True)
     phone_number = models.CharField(max_length=255)
     email = models.EmailField(max_length=254)
@@ -29,7 +29,7 @@ USER_ROLES = [
     ( STUDENT_USER, 'student')
 ]
 
-class role(models.Models):
+class role(models.Model):
     roleName = models.CharField(max_length=255, choices=USER_ROLES, default=NORMAL_USER )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

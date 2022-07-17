@@ -79,11 +79,14 @@ WSGI_APPLICATION = 'storefont.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'myTeacher',
-        'HOST': 'localhost',
-        'PASSWORD': 'pcb',
-        'PORT': '3306',
-        'USER': 'root',
+        'USER':'root',
+        'NAME':'myTeacher',
+        'HOST':'localhost',
+        'PASSWORD': 'pcb3ya13',
+        'PORT':'3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
     }
 }
 
