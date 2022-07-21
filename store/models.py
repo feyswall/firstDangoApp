@@ -37,8 +37,15 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
-    phone = models.CharField(max_length=255)
+    phone = models.CharField(max_length=255, null=True)
     birth_date = models.DateField(null=True, choices=MEMBERSHIP_CHOICE, default=MEMBERSHIP_BRONZE)
+
+
+class Meta:
+    db_table = 'store_customers'
+    indexes = [
+        models.Index(fields=['email', 'first_name', 'email', 'last_name'])
+    ]
 
 
 class Order(models.Model):

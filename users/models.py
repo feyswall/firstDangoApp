@@ -1,4 +1,5 @@
 from email.policy import default
+from operator import index
 from random import choices
 from django.db import models
 from django.forms import CharField, DateField, IntegerField
@@ -15,7 +16,8 @@ class User(models.Model):
     gender = models.CharField(max_length =255, choices=GENDER )
     date_of_birth = models.DateTimeField(auto_now_add=True)
     phone_number = models.CharField(max_length=255)
-    email = models.EmailField(max_length=254)
+    email = models.EmailField(max_length=254, null=True)  
+
 
 NORMAL_USER = 'N'
 SUPER_USER = 'S'
