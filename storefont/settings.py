@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'playground',
     'store',
     'users',
+    'tags',
 ]
 
 MIDDLEWARE = [

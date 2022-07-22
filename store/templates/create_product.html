@@ -34,13 +34,32 @@
             <form action="/store/store-product" method="POST">
       {% csrf_token %}
       <div class="form-group">
+        <label for="Price">Price</label>
         {{ form.price }}
       </div>
       <div>
+        <label for="description">Description</label>
         {{ form.description }}
       </div>
       <div>
+        <label for="tittle">Title</label>
           {{ form.tittle }}
+      </div>
+      <div>
+        <label for="inventory">Inventory</label>
+          {{ form.inventory }}
+      </div>
+      <div>
+        <label for="promotion">Promotion</label>
+        {{ form.promotion }}
+      </div>
+      <div>
+        <label for="last_update"></label>
+        {{ form.last_update }}
+      </div>
+      <div>
+        <label for="collection"></label>
+        {{ form.collection }}
       </div>
         </div>
     </div>

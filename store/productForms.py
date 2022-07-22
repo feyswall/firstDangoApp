@@ -11,15 +11,15 @@ class createProductForm(forms.Form):
     COLLECTIONS = list(queryset)
     PROMO = [('2', '1norder'), ('3', 'another')]
 
-    tittle = forms.CharField(widget=forms.TextInput(
-        attrs={'class': 'some_class',
-               'id': 'some_id'}))
+    tittle = forms.CharField(max_length=255)
 
-    description = forms.CharField(max_length=1000, label='description', help_text='description'
-        , widget=forms.CharField())
+    description = forms.CharField(widget=forms.Textarea())
+    
     inventory = forms.IntegerField()
+    
     last_update = forms.DateField(
         widget=forms.SelectDateWidget(years=range(1500, 3000)))
+    
     promotion = forms.ChoiceField(
         label="promotions",
         widget=forms.RadioSelect,
@@ -31,5 +31,15 @@ class createProductForm(forms.Form):
         choices=COLLECTIONS,
     )
 
+    price = forms.IntegerField()
+
 
 # 0624928766
+
+# fields to Learn are:
+# > input field
+# > radio
+# > checkbox
+# > text field
+# > multiple selection
+# > selection
