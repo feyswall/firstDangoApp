@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.validators import MinValueValidator
 # Create your models here.
 
 
@@ -7,21 +7,41 @@ class Promotion(models.Model):
     description = models.CharField(max_length=255)
     discount = models.FloatField()
 
+    def __str__(self) -> str:
+        return self.description
+
 
 class Collection(models.Model):
     title = models.CharField(max_length=255)
     featured_product = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True, related_name='+')
 
+    def __str__(self) -> str:
+        return self.title
+
+    class Meta:
+        ordering = ['title']
+
+
 
 class Product(models.Model):
     title = models.CharField(max_length=255)
-    description = models.TextField()
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+    description = models.TextField(blank=True)
+    price = models.DecimalField(max_digits=6, decimal_places=2,
+    validators=[MinValueValidator(1, message="Weka sawa apa wewe...")]
+    )
     inventory = models.IntegerField()
+    slug = models.CharField(max_length=200, null=True)
     last_update = models.DateTimeField(auto_now=True)
     collection = models.ForeignKey(Collection, on_delete=models.PROTECT)
     # promotions = models.ManyToManyField(Promotion, related_name='product')
-    promotions = models.ManyToManyField(Promotion, related_name='product')
+    promotions = models.ManyToManyField(Promotion, related_name='product', blank=True)
+
+    def __str__(self) -> str:
+        return self.title
+
+    class Meta:
+        ordering = ['title']
+
 
 
 class Customer(models.Model):
@@ -38,7 +58,16 @@ class Customer(models.Model):
     last_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=255, null=True)
-    birth_date = models.DateField(null=True, choices=MEMBERSHIP_CHOICE, default=MEMBERSHIP_BRONZE)
+    birth_date = models.DateField(null=True)
+    membership = models.CharField(
+        choices=MEMBERSHIP_CHOICE, default=MEMBERSHIP_BRONZE, max_length=200)
+
+    class Meta:
+        ordering = ['first_name', 'last_name']
+
+    def __str__(self) -> str:
+        fullname = f"{self.first_name} {self.last_name}"
+        return fullname
 
 
 class Meta:
@@ -46,6 +75,7 @@ class Meta:
     indexes = [
         models.Index(fields=['email', 'first_name', 'email', 'last_name'])
     ]
+
 
 
 class Order(models.Model):
@@ -57,6 +87,12 @@ class Order(models.Model):
     placed_at = models.DateTimeField(auto_now_add=True)
     payment_status = models.CharField(max_length=255, choices=PAYMENT_CHOICES, default='p')
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
+
+    def __str__(self) -> str:
+        datePlaced = str(self.placed_at)
+        return datePlaced 
+
+
 
 
 class Address(models.Model):
@@ -72,9 +108,15 @@ class OrderItem(models.Model):
     quantity = models.PositiveSmallIntegerField()
     unit_price = models.DecimalField(max_digits=6, decimal_places=2)
 
+    def __str__(self) -> str:
+        valueOut = f"{self.order.placed_at} {self.product.title}"
+        return valueOut
+
+
 
 class Cart(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
+
 
 
 class CartItem(models.Model):

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'store',
     'users',
     'tags',
+    'store_custom',
 ]
 
 MIDDLEWARE = [
