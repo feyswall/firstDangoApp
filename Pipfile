@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 mysqlclient = "*"
+django = "==3.2"
+djangorestframework = "*"
 
 [dev-packages]
 
