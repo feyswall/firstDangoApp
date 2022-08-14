@@ -1,13 +1,16 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+
+
 # Create your models here.
+from django.db.models import CharField
 
 
 class Promotion(models.Model):
     description = models.CharField(max_length=255)
     discount = models.FloatField()
 
-    def __str__(self) -> str:
+    def __str__(self) -> CharField:
         return self.description
 
 
@@ -15,20 +18,19 @@ class Collection(models.Model):
     title = models.CharField(max_length=255)
     featured_product = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True, related_name='+')
 
-    def __str__(self) -> str:
+    def __str__(self) -> CharField:
         return self.title
 
     class Meta:
         ordering = ['title']
 
 
-
 class Product(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=6, decimal_places=2,
-    validators=[MinValueValidator(1, message="Weka sawa apa wewe...")]
-    )
+                                validators=[MinValueValidator(1, message="Weka sawa apa wewe...")]
+                                )
     inventory = models.IntegerField()
     slug = models.CharField(max_length=200, null=True)
     last_update = models.DateTimeField(auto_now=True)
@@ -36,12 +38,11 @@ class Product(models.Model):
     # promotions = models.ManyToManyField(Promotion, related_name='product')
     promotions = models.ManyToManyField(Promotion, related_name='product', blank=True)
 
-    def __str__(self) -> str:
+    def __str__(self) -> CharField:
         return self.title
 
     class Meta:
         ordering = ['title']
-
 
 
 class Customer(models.Model):
@@ -77,7 +78,6 @@ class Meta:
     ]
 
 
-
 class Order(models.Model):
     PAYMENT_CHOICES = [
         ('P', 'pending'),
@@ -90,9 +90,7 @@ class Order(models.Model):
 
     def __str__(self) -> str:
         datePlaced = str(self.placed_at)
-        return datePlaced 
-
-
+        return datePlaced
 
 
 class Address(models.Model):
@@ -113,10 +111,8 @@ class OrderItem(models.Model):
         return valueOut
 
 
-
 class Cart(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
-
 
 
 class CartItem(models.Model):
